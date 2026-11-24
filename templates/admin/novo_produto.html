@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+
+<section class="novo-produto">
+    <h2>➕ Novo Produto</h2>
+
+    <form action="{{ url_for('admin.novo_produto') }}" method="POST" enctype="multipart/form-data">
+        <input type="text" name="nome" placeholder="Nome do produto" required>
+        <input type="number" name="preco" placeholder="Preço" step="0.01" required>
+        <input type="text" name="categoria" placeholder="Categoria" required>
+        <input type="file" name="imagem" accept="image/*">
+        <button type="submit">Cadastrar Produto</button>
+    </form>
+
+    <a href="{{ url_for('admin.dashboard') }}">Voltar</a>
+</section>
+
+{% endblock %}

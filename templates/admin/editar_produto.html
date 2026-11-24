@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+
+<section class="novo-produto">
+    <h2>✏️ Editar Produto</h2>
+
+    <form action="{{ url_for('admin.editar_produto', id=produto.id) }}" method="POST" enctype="multipart/form-data">
+        <input type="text" name="nome" value="{{ produto.nome }}" required>
+        <input type="number" name="preco" value="{{ produto.preco }}" step="0.01" required>
+        <input type="text" name="categoria" value="{{ produto.categoria }}" required>
+
+        {% if produto.imagem %}
+        <p>Imagem atual:</p>
+        <img src="{{ url_for('static', filename='img/produtos/' + produto.imagem) }}" 
+             style="height: 100px; border-radius: 8px; margin-bottom: 1rem;">
+        {% endif %}
+
+        <input type="file" name="imagem" accept="image/*">
+        <button type="submit">Salvar alterações</button>
+    </form>
+
+    <a href="{{ url_for('admin.dashboard') }}">Voltar</a>
+</section>
+
+{% endblock %}

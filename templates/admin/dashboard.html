@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+
+<section class="dashboard">
+    <div class="dashboard-header">
+        <h2>🧑‍💻 Painel Admin</h2>
+        <a href="{{ url_for('admin.logout') }}">Sair</a>
+    </div>
+
+    <div class="dashboard-grid">
+
+        <div class="pedidos">
+            <h3>Pedidos Recentes</h3>
+            {% for pedido in pedidos %}
+            <div class="pedido-card">
+                <p><strong>{{ pedido.cliente }}</strong> — {{ pedido.telefone }}</p>
+                <p>Status: {{ pedido.status }}</p>
+                <p>Total: R$ {{ "%.2f"|format(pedido.total) }}</p>
+                <ul>
+                    {% for item in pedido.itens %}
+                    <li>{{ item.produto.nome }} x{{ item.quantidade }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="produtos">
+    <div class="produtos-header">
+        <h3>Produtos</h3>
+        <a href="{{ url_for('admin.novo_produto') }}">+ Novo Produto</a>
+    </div>
+    {% for produto in produtos %}
+    <div class="produto-card">
+        <p><strong>{{ produto.nome }}</strong> — R$ {{ "%.2f"|format(produto.preco) }}</p>
+        <p>{{ produto.categoria }}</p>
+        <p>Estoque: <strong>{{ produto.estoque }}</strong> unidades</p>
+
+        <form action="{{ url_for('admin.atualizar_estoque', id=produto.id) }}" method="POST">
+            <input type="number" name="estoque" value="{{ produto.estoque }}" min="0">
+            <button type="submit">Atualizar</button>
+        </form>
+
+        <a href="{{ url_for('admin.editar_produto', id=produto.id) }}">Editar</a>
+        <a href="{{ url_for('admin.deletar_produto', id=produto.id) }}">Deletar</a>
+    </div>
+    {% endfor %}
+</div>
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

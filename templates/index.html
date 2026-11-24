@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block hero %}
+<section class="hero">
+    <h1>Bolos gelados feitos com carinho há 17 anos</h1>
+    <p>Escolha seus favoritos, preencha seus dados e envie o pedido direto para a Gessika pelo WhatsApp.</p>
+    <a class="botao" href="#cardapio">Ver cardápio</a>
+</section>
+{% endblock %}
+
+{% block conteudo %}
+
+<section>
+    <div class="secao-titulo" id="cardapio">
+        <h2>Nosso cardápio</h2>
+        <p>Use os botões + e − para escolher a quantidade de cada bolo.</p>
+    </div>
+
+    <form action="{{ url_for('cliente.fazer_pedido') }}" method="POST">
+
+        <div class="bolos">
+            {% for produto in produtos %}
+            <article class="bolo {% if produto.estoque == 0 %}esgotado{% endif %}" data-preco="{{ produto.preco }}">
+
+                <div class="bolo-foto">
+                    {% if produto.imagem %}
+                    <img src="{{ url_for('static', filename='img/produtos/' + produto.imagem) }}"
+                         alt="{{ produto.nome }}">
+                    {% else %}
+                    <div class="vazio">🍰</div>
+                    {% endif %}
+                    {% if produto.estoque == 0 %}
+                    <span class="selo-esgotado">Esgotado</span>
+                    {% endif %}
+                </div>
+
+                <div class="bolo-info">
+                    <h3>{{ produto.nome }}</h3>
+                    <p class="categoria">{{ produto.categoria }}</p>
+                    <p class="preco">R$ {{ "%.2f"|format(produto.preco) }}</p>
+
+                    {% if produto.estoque > 0 %}
+                    <p class="estoque">{{ produto.estoque }} disponíveis</p>
+                    <div class="stepper">
+                        <button type="button" data-passo="-1" aria-label="Diminuir quantidade de {{ produto.nome }}">−</button>
+                        <input type="number"
+                               name="quantidade_{{ produto.id }}"
+                               min="0"
+                               max="{{ produto.estoque }}"
+                               value="0"
+                               inputmode="numeric"
+                               aria-label="Quantidade de {{ produto.nome }}">
+                        <button type="button" data-passo="1" aria-label="Aumentar quantidade de {{ produto.nome }}">+</button>
+                    </div>
+                    <input type="hidden" name="produtos" value="{{ produto.id }}">
+                    {% else %}
+                    <p class="estoque">Esgotado no momento</p>
+                    {% endif %}
+                </div>
+
+            </article>
+            {% endfor %}
+        </div>
+
+        <div class="dados-cliente" id="dados">
+            <h3>Seus dados</h3>
+            <p>A Gessika vai receber o pedido no WhatsApp e entrar em contato com você.</p>
+            <div class="campos">
+                <input type="text" name="cliente" placeholder="Seu nome" aria-label="Seu nome" required>
+                <input type="tel" name="telefone" placeholder="Seu telefone com DDD" aria-label="Seu telefone com DDD" required>
+            </div>
+            <button type="submit">Enviar pedido pelo WhatsApp</button>
+        </div>
+
+    </form>
+</section>
+
+<div class="barra-pedido" id="barra-pedido" aria-live="polite">
+    <span><strong id="barra-total">R$ 0,00</strong><small id="barra-itens">0 itens</small></span>
+    <a href="#dados">Finalizar</a>
+</div>
+
+{% endblock %}

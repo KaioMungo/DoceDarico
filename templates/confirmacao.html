@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+
+<section class="confirmacao">
+    <h2>Pedido realizado com sucesso! 🎉</h2>
+
+    <div class="detalhes-pedido">
+        <p><strong>Cliente:</strong> {{ pedido.cliente }}</p>
+        <p><strong>Telefone:</strong> {{ pedido.telefone }}</p>
+        <p><strong>Status:</strong> {{ pedido.status }}</p>
+
+        <h3>Itens do pedido:</h3>
+        <ul>
+            {% for item in pedido.itens %}
+            <li>{{ item.produto.nome }} — R$ {{ "%.2f"|format(item.preco_unitario) }}</li>
+            {% endfor %}
+        </ul>
+
+        <p class="total"><strong>Total: R$ {{ "%.2f"|format(pedido.total) }}</strong></p>
+    </div>
+
+    <a href="{{ url_for('cliente.index') }}">Voltar ao cardápio</a>
+</section>
+
+{% endblock %}

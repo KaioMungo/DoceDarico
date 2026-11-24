@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block hero %}
+<section class="hero">
+    <h1>Feito com amor há 17 anos</h1>
+    <p>Uma paixão que nasceu em casa e conquistou corações.</p>
+</section>
+{% endblock %}
+
+{% block conteudo %}
+
+<section class="sobre-historia">
+    <div class="sobre-foto">
+        <img src="{{ url_for('static', filename='img/foto gessika.jpeg') }}" alt="Gessika Darico Mungo">
+    </div>
+    <div class="sobre-texto">
+        <h2>Quem é Gessika Darico?</h2>
+        <p>
+            Tudo começou há 17 anos, quando Gessika Darico Mungo descobriu na cozinha
+            um lugar onde podia expressar sua criatividade e carinho. O que era apenas
+            um hobby logo se tornou uma arte, e cada bolo saído de suas mãos carrega
+            um pedaço dessa história.
+        </p>
+        <p>
+            Hoje, mesmo com uma rotina de trabalho intensa, Gessika nunca deixou de
+            produzir seus doces. Afinal, para ela, isso não é apenas uma receita,
+            é uma vocação. Seu maior sonho é transformar esse amor em seu trabalho
+            principal, dedicando cada dia inteiro ao que mais ama fazer.
+        </p>
+        <blockquote>
+            "Cada bolo que faço tem um pouco de mim. É meu jeito de cuidar das pessoas."
+        </blockquote>
+    </div>
+</section>
+
+<section class="especialidade">
+    <h2>Nossa especialidade</h2>
+    <p>
+        Os <strong>bolos gelados</strong> são o carro-chefe do Doce Darico,
+        receitas desenvolvidas com carinho ao longo de anos de dedicação.
+        Cremosos, frescos e irresistíveis, eles conquistaram clientes de todas
+        as idades e se tornaram a assinatura de Gessika.
+    </p>
+</section>
+
+<section class="valores">
+    <div>
+        <h3>Artesanal</h3>
+        <p>Cada bolo feito à mão com ingredientes selecionados.</p>
+    </div>
+    <div>
+        <h3>Com amor</h3>
+        <p>17 anos de paixão em cada receita.</p>
+    </div>
+    <div>
+        <h3>Qualidade</h3>
+        <p>Sabor que conquista desde a primeira fatia.</p>
+    </div>
+</section>
+
+<section class="chamada">
+    <h2>Quer experimentar?</h2>
+    <p>Conheça o cardápio e faça seu pedido.</p>
+    <a class="botao" href="{{ url_for('cliente.index') }}">Ver cardápio</a>
+</section>
+
+{% endblock %}
